@@ -1,0 +1,566 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Rent API",
+      "version": "1.0.0"
+    },
+    "tags": [
+      {
+        "name": "Auth"
+      },
+      {
+        "name": "General"
+      },
+      {
+        "name": "Custom"
+      }
+
+    ],
+    "paths": {
+      "/api/register": {
+
+        "post": {
+          "tags": ["Auth"],
+          "description": "Register new account in service",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Registration data",
+              "in": "body",
+              "description": "JSON data for registration",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/RegisterData"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            },
+            "400": {
+              "description": "Invalid parameters"
+            }
+          }
+        }
+      },
+      "/api/token": {
+        "post": {
+          "tags": ["Auth"],
+          "description": "Get access token",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Auth data",
+              "in": "body",
+              "description": "JSON data for auth",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/AuthData"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            },
+            "400": {
+              "description": "Invalid parameters"
+            }
+          }
+        }
+      },
+      "/api/search": {
+        "get": {
+          "tags": ["General"],
+          "description": "Get ads",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "Bearer token",
+              "required": true,
+              "schema": {"type": "string"},
+            },
+            {
+              "name": "query",
+              "in": "query",
+              "description": "Search in description and address",
+              "required": false,
+              "schema": {"type": "string"},
+            },
+            {
+              "name": "max_price",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "min_price",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "max_rooms",
+              "in": "query",
+              "required": false,
+              "type": "integer"
+            },
+            {
+              "name": "min_rooms",
+              "in": "query",
+              "required": false,
+              "type": "integer"
+            },
+            {
+              "name": "max_floor",
+              "in": "query",
+              "required": false,
+              "type": "integer"
+            },
+            {
+              "name": "min_floor",
+              "in": "query",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "district",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "enum": ["Голосіївський",
+                      "Шевченківський",
+                      "Оболонський",
+                      "Подільський",
+                      "Печерський",
+                      "Дарницький",
+                      "Святошинський",
+                      "Солом'янський",
+                      "Деснянський",
+                      "Дніпровський"],
+            },
+            {
+              "name": "min_total_area",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "max_total_area",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "min_kitchen_area",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "max_kitchen_area",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "animals",
+              "in": "query",
+              "required": false,
+              "type": "boolean"
+            },
+            {
+              "name": "source",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "enum": ["olx", "rieltor"]
+            },
+            {
+              "name": "min_price_diff",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "max_price_diff",
+              "in": "query",
+              "required": false,
+              "type": "number",
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            },
+            "400": {
+              "description": "Invalid parameters"
+            }
+          }
+        }
+      },
+      "/api/stats": {
+        "get": {
+          "tags": ["General"],
+          "description": "Get ads statistics",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "Bearer token",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "group_by",
+              "in": "query",
+              "description": "Search in description and address",
+              "required": true,
+              "type": "string",
+              "enum": ["year", "month", "week"]
+            },
+            {
+              "name": "metric",
+              "in": "query",
+              "description": "Search in description and address",
+              "required": true,
+              "type": "string",
+              "enum": ["avg", "median", "min", "max"]
+            },
+            {
+              "name": "query",
+              "in": "query",
+              "description": "Search in description and address",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "max_price",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "min_price",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "max_rooms",
+              "in": "query",
+              "required": false,
+              "type": "integer"
+            },
+            {
+              "name": "min_rooms",
+              "in": "query",
+              "required": false,
+              "type": "integer"
+            },
+            {
+              "name": "max_floor",
+              "in": "query",
+              "required": false,
+              "type": "integer"
+            },
+            {
+              "name": "min_floor",
+              "in": "query",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "district",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "enum": ["Голосіївський",
+                      "Шевченківський",
+                      "Оболонський",
+                      "Подільський",
+                      "Печерський",
+                      "Дарницький",
+                      "Святошинський",
+                      "Солом'янський",
+                      "Деснянський",
+                      "Дніпровський"],
+            },
+            {
+              "name": "min_total_area",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "max_total_area",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "min_kitchen_area",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "max_kitchen_area",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "animals",
+              "in": "query",
+              "required": false,
+              "type": "boolean"
+            },
+            {
+              "name": "source",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "enum": ["olx", "rieltor"]
+            },
+            {
+              "name": "min_price_diff",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "max_price_diff",
+              "in": "query",
+              "required": false,
+              "type": "number",
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            },
+            "400": {
+              "description": "Invalid parameters"
+            }
+          }
+        }
+      },
+      "/api/custom/evaluate": {
+        "get": {
+          "tags": ["Custom"],
+          "description": "Evaluate custom apartment",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "Bearer token",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "rooms",
+              "in": "query",
+              "required": false,
+              "type": "integer"
+            },
+            {
+              "name": "floor",
+              "in": "query",
+              "required": false,
+              "type": "integer"
+            },
+            {
+              "name": "max_floor",
+              "in": "query",
+              "required": false,
+              "type": "integer"
+            },
+            {
+              "name": "district",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "enum": ["Голосіївський",
+                      "Шевченківський",
+                      "Оболонський",
+                      "Подільський",
+                      "Печерський",
+                      "Дарницький",
+                      "Святошинський",
+                      "Солом'янський",
+                      "Деснянський",
+                      "Дніпровський"],
+            },
+            {
+              "name": "total_area",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "kitchen_area",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "animals",
+              "in": "query",
+              "required": false,
+              "type": "boolean"
+            },
+            {
+              "name": "description",
+              "in": "query",
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            },
+            "400": {
+              "description": "Invalid parameters"
+            }
+          }
+        }
+      },
+      "/api/custom/similar": {
+        "get": {
+          "tags": ["Custom"],
+          "description": "Evaluate custom apartment",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "Bearer token",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "rooms",
+              "in": "query",
+              "required": false,
+              "type": "integer"
+            },
+            {
+              "name": "floor",
+              "in": "query",
+              "required": false,
+              "type": "integer"
+            },
+            {
+              "name": "building_floors",
+              "in": "query",
+              "required": false,
+              "type": "integer"
+            },
+            {
+              "name": "district",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "enum": ["Голосіївський",
+                      "Шевченківський",
+                      "Оболонський",
+                      "Подільський",
+                      "Печерський",
+                      "Дарницький",
+                      "Святошинський",
+                      "Солом'янський",
+                      "Деснянський",
+                      "Дніпровський"],
+            },
+            {
+              "name": "total_area",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "kitchen_area",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "price",
+              "in": "query",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "description",
+              "in": "query",
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            },
+            "400": {
+              "description": "Invalid parameters"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "RegisterData": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "second_name": {
+            "type": "string"
+          }
+        }
+      },
+      "AuthData": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+        }
+      }
+    }
+  }
